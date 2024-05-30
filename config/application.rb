@@ -20,6 +20,8 @@ Bundler.require(*Rails.groups)
 
 module PomPlannerBe
   class Application < Rails::Application
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '_your_app_session'
+    config.middleware.use ActionDispatch::Cookies
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 
