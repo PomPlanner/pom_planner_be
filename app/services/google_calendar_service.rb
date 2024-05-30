@@ -4,7 +4,7 @@ require 'googleauth/stores/file_token_store'
 
 class GoogleCalendarService
   APPLICATION_NAME = 'PomPlanner'.freeze
-  CREDENTIALS_PATH = 'path/to/credentials.json'.freeze # Update this path
+  CREDENTIALS = { client_id: ENV['GOOGLE_CLIENT_ID'], client_secret: ENV['GOOGLE_CLIENT_SECRET'] }
   TOKEN_PATH = 'token.yaml'.freeze
   SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_EVENTS
 
@@ -16,7 +16,8 @@ class GoogleCalendarService
   end
 
   def user_credentials(user)
-    client_id = Google::Auth::ClientId.from_file(CREDENTIALS_PATH)
+    client_id = CREDENTIALS[:client_id]
+    client_secret = CREDENTIALS[:client_secret]
     token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKEN_PATH)
     authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
     credentials = authorizer.get_credentials(user.uid)
