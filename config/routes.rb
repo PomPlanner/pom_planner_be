@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   # Defines the root path route ("/")
   # root "posts#index"
+  resources :events, only:[:create]
 end
 

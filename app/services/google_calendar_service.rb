@@ -34,7 +34,7 @@ class GoogleCalendarService
     credentials
   end
 
-  def create_event(summary, description, start_time, end_time)
+  def create_event_with_video(summary, description, start_time, end_time)
     event = Google::Apis::CalendarV3::Event.new(
       summary: summary,
       description: description,
