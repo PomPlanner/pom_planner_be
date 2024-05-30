@@ -1,7 +1,7 @@
 Rails.application.config.middleware.use ActionDispatch::Session::CookieStore, key: '_your_app_session'
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {
-    scope: 'email,profile',
+    scope: 'email,profile,https://www.googleapis.com/auth/calendar.events',
     prompt: 'select_account',
     access_type: 'offline'
   }
