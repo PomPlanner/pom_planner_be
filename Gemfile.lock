@@ -366,6 +366,7 @@ DEPENDENCIES
   faraday
   google-apis-calendar_v3
   google-apis-youtube_v3
+  googleauth
   launchy
   omniauth
   omniauth-google-oauth2
