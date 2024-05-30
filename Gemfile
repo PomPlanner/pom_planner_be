@@ -63,5 +63,3 @@ gem 'rack-cors'
 
 gem 'google-apis-youtube_v3'
 gem 'google-apis-calendar_v3'
-
-
