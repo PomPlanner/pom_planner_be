@@ -8,7 +8,7 @@ class User < ApplicationRecord
       u.email = response[:info][:email]
       u.access_token = response[:credentials][:token] # Store access token
       u.refresh_token = response[:credentials][:refresh_token] # Store refresh token
-      u.password = SecureRandom.hex(15) # Generate a random password
+      u.password = SecureRandom.hex(15)
     end
   end
 end
