@@ -12,21 +12,24 @@ class GoogleCalendarService
     @user = user
     @service = Google::Apis::CalendarV3::CalendarService.new
     @service.client_options.application_name = APPLICATION_NAME
-    @service.authorization = user_credentials
+    @service.authorization = user_credentials(user)
+    # require 'pry'; binding.pry
   end
 
-  def user_credentials(uid)
+  def user_credentials(user)
+    # require 'pry'; binding.pry
     client_id = CREDENTIALS[:client_id]
     client_secret = CREDENTIALS[:client_secret]
     token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKEN_PATH)
     authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
-    credentials = authorizer.get_credentials(@user.uid)
+    require 'pry'; binding.pry
+    credentials = authorizer.get_credentials(user.uid)
 
     if credentials.nil?
       url = authorizer.get_authorization_url(base_url: 'http://localhost:5000/')
       puts "Open the following URL in the browser and enter the resulting code after authorization:\n" + url
       code = gets.chomp
-      credentials = authorizer.get_and_store_credentials_from_code(user_id: @user.uid, code: code, base_url: 'http://localhost:5000/')
+      credentials = authorizer.get_and_store_credentials_from_code(user_id: user.uid, code: code, base_url: 'http://localhost:5000/')
     else
       credentials.refresh! if credentials.expired?
     end

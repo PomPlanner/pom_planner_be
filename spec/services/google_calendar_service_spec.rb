@@ -1,13 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe GoogleCalendarService do
+  let(:user) { create(:user) }
+
+  # before do
+  #   # Mock OAuth token retrieval
+  #   allow_any_instance_of(GoogleCalendarService).to receive(:user_credentials).and_return(true)
+  # end
 
   describe '#create_event_with_video' do
-    it 'inserts an event into the Google Calendar' do
-      user = create(:user) 
-      uid = user.uid
+  
+    it 'inserts an event into the Google Calendar', vcr: { cassette_name: 'google_calendar_event_insertion' } do
       service = GoogleCalendarService.new(user)
-      require 'pry'; binding.pry
+      # require 'pry'; binding.pry
       
       summary = 'Test Event'
       description = 'Test Event Description'
