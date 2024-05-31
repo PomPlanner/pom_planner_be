@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  def create_with_video
+  def create
     summary = params[:summary]
     video_url = params[:video_url]
     description = "#{params[:description]}\n\nWatch the video: #{video_url}"

@@ -1,12 +1,74 @@
 {
   "RSpec": {
     "coverage": {
+      "/Users/nicoshanstrom/Turing/3mod/projects/pom_planner/pom_planner_be/app/services/google_calendar_service.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          null,
+          null
+        ]
+      },
       "/Users/nicoshanstrom/Turing/3mod/projects/pom_planner/pom_planner_be/app/models/user.rb": {
         "lines": [
           1,
           1,
           null,
           1,
+          0,
           0,
           0,
           0,
@@ -26,6 +88,6 @@
         ]
       }
     },
-    "timestamp": 1717035938
+    "timestamp": 1717119030
   }
 }
