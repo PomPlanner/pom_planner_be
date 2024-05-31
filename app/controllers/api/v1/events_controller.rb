@@ -1,7 +1,7 @@
 class API::V1::EventsController < ApplicationController
   def new
     video_url = params[:video_url]
-    @event = OpenStruct.new(summary: "", description: "Watch the video: #{video_url}", start_time: "", end_time: "")
+    @event = OpenStruct.new(summary: "", description: "Get off your chair and listen/watch: #{video_url}", start_time: "", end_time: "")
   end
   
   def create
