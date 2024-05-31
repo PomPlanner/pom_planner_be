@@ -18,7 +18,16 @@ class YoutubeService
   private
 
   def self.call_api(url, params = {})
-    # Your implementation to make the API call
+    response = connection.get(url) do |request|
+      request.params = params
+      request.params[:key] = Rails.application.credentials.google[:api_key]
+    end
+
+    JSON.parse(response.body, symbolize_names: true)
+  end
+
+  def self.connection
+    Faraday.new('https://www.googleapis.com/youtube/v3')
   end
 
   def self.parse_response(response)
