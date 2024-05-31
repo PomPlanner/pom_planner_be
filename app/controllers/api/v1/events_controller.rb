@@ -1,4 +1,8 @@
-class EventsController < ApplicationController
+class API::V1::EventsController < ApplicationController
+  def new
+    @event = Event.new
+  end
+  
   def create
     summary = params[:summary]
     video_url = params[:video_url]
@@ -18,6 +22,7 @@ class EventsController < ApplicationController
 
     render json: { message: 'Event created successfully' }, status: :ok
   rescue => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    flash.now[:alert] = "Error creating event: #{e.message}"
+    render :new
   end
 end
