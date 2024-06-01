@@ -15,8 +15,10 @@ RSpec.describe GoogleCalendarService do
 
   describe "#create_event_with_video" do
     it "creates an event with the given details" do
-      expect(google_calendar_service.instance_variable_get(:@service)).to receive(:insert_event).with('primary', kind_of(Google::Apis::CalendarV3::Event))
-      google_calendar_service.create_event_with_video(event_data[:summary], event_data[:description], event_data[:start_time], event_data[:end_time])
+      # expect(google_calendar_service.instance_variable_get(:@service)).to receive(:insert_event).with('primary', kind_of(Google::Apis::CalendarV3::Event))
+      # google_calendar_service.create_event_with_video(event_data[:summary], event_data[:description], event_data[:start_time], event_data[:end_time])
+      expect(google_calendar_service.instance_variable_get(:@service)).to receive(:insert_event).with('primary', kind_of(Google::Apis::CalendarV3::Event)).and_return(true)
+      expect(google_calendar_service.create_event_with_video(event_data[:summary], event_data[:description], event_data[:start_time], event_data[:end_time])).to eq(true)
     end
   end
 end
