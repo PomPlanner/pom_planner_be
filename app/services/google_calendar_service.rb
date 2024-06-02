@@ -1,6 +1,7 @@
 require 'google/apis/calendar_v3'
 require 'googleauth'
 require 'googleauth/stores/file_token_store'
+require 'yaml'
 
 class GoogleCalendarService
   APPLICATION_NAME = 'PomPlanner'.freeze
@@ -11,30 +12,37 @@ class GoogleCalendarService
   def initialize(user)
     @user = user
     @service = Google::Apis::CalendarV3::CalendarService.new
-    @service.client_options.application_name = APPLICATION_NAME
+    # require 'pry'; binding.pry
+    # @service.client_options.application_name = APPLICATION_NAME
     @service.authorization = user_credentials(user)
+    # require 'pry'; binding.pry
   end
 
   def user_credentials(user)
+    # require 'pry'; binding.pry
     client_id = CREDENTIALS[:client_id]
     client_secret = CREDENTIALS[:client_secret]
     token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKEN_PATH)
     authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
-    credentials = authorizer.get_credentials(user.uid)
-
-    if credentials.nil?
-      url = authorizer.get_authorization_url(base_url: 'http://localhost:5000/')
-      puts "Open the following URL in the browser and enter the resulting code after authorization:\n" + url
-      code = gets.chomp
-      credentials = authorizer.get_and_store_credentials_from_code(user_id: user.uid, code: code, base_url: 'http://localhost:5000/')
-    else
-      credentials.refresh! if credentials.expired?
-    end
+    
+    access_token = @user.token
+    refresh_token = @user.refresh_token
+    
+    credentials = Google::Auth::UserRefreshCredentials.new(
+      client_id: client_id,
+      client_secret: client_secret,
+      scope: SCOPE,
+      refresh_token: refresh_token,
+      access_token: access_token,
+      additional_parameters: { 'access_type' => 'offline' } # Include this if you want to obtain a refresh token
+    )
+   
+    credentials.fetch_access_token! if credentials.expired?
 
     credentials
   end
 
-  def create_event(summary, description, start_time, end_time)
+  def create_event_with_video(summary, description, start_time, end_time)
     event = Google::Apis::CalendarV3::Event.new(
       summary: summary,
       description: description,

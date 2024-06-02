@@ -3,10 +3,16 @@ Rails.application.routes.draw do
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
-  get '/auth/:provider/callback', to: 'sessions#omniauth'
-  get '/auth/failure', to: redirect('/')
-  delete '/logout', to: 'sessions#destroy'
-  # Defines the root path route ("/")
-  # root "posts#index"
+  namespace :api do
+    namespace :v1 do
+      get '/auth/:provider/callback', to: 'sessions#omniauth'
+      delete '/logout', to: 'sessions#destroy'
+      get '/auth/failure', to: redirect('/')
+      # Defines the root path route ("/")
+      # root "posts#index"
+      resources :users, only: [:show]
+      resources :events, only: [:new, :create]
+    end
+  end
 end
 
