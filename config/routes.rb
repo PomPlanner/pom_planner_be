@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       # root "posts#index"
       resources :users, only: [:show]
       resources :events, only: [:new, :create]
+      get '/search', to: 'searches#index'
     end
   end
 end

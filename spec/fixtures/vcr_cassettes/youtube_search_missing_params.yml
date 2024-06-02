@@ -1,0 +1,139 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.googleapis.com/youtube/v3/search?key=<API_KEY>&maxResults=25&order=relevance&part=snippet&q&type=video&videoDuration&videoEmbeddable=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 02 Jun 2024 21:23:05 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      Cache-Control:
+      - private
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "error": {
+            "code": 400,
+            "message": "Invalid value at 'video_duration' (type.googleapis.com/youtube.api.v3.SearchListRequest.VideoDurationWrapper.VideoDuration), \"\"",
+            "errors": [
+              {
+                "message": "Invalid value at 'video_duration' (type.googleapis.com/youtube.api.v3.SearchListRequest.VideoDurationWrapper.VideoDuration), \"\"",
+                "reason": "invalid"
+              }
+            ],
+            "status": "INVALID_ARGUMENT",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.BadRequest",
+                "fieldViolations": [
+                  {
+                    "field": "video_duration",
+                    "description": "Invalid value at 'video_duration' (type.googleapis.com/youtube.api.v3.SearchListRequest.VideoDurationWrapper.VideoDuration), \"\""
+                  }
+                ]
+              }
+            ]
+          }
+        }
+  recorded_at: Sun, 02 Jun 2024 21:23:05 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/youtube/v3/search?key=<API_KEY>&maxResults=25&order=relevance&part=snippet&q&type=video&videoDuration&videoEmbeddable=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 02 Jun 2024 21:23:05 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      Cache-Control:
+      - private
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "error": {
+            "code": 400,
+            "message": "Invalid value at 'video_duration' (type.googleapis.com/youtube.api.v3.SearchListRequest.VideoDurationWrapper.VideoDuration), \"\"",
+            "errors": [
+              {
+                "message": "Invalid value at 'video_duration' (type.googleapis.com/youtube.api.v3.SearchListRequest.VideoDurationWrapper.VideoDuration), \"\"",
+                "reason": "invalid"
+              }
+            ],
+            "status": "INVALID_ARGUMENT",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.BadRequest",
+                "fieldViolations": [
+                  {
+                    "field": "video_duration",
+                    "description": "Invalid value at 'video_duration' (type.googleapis.com/youtube.api.v3.SearchListRequest.VideoDurationWrapper.VideoDuration), \"\""
+                  }
+                ]
+              }
+            ]
+          }
+        }
+  recorded_at: Sun, 02 Jun 2024 21:23:05 GMT
+recorded_with: VCR 6.2.0
