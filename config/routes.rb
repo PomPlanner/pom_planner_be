@@ -10,8 +10,10 @@ Rails.application.routes.draw do
       get '/auth/failure', to: redirect('/')
       # Defines the root path route ("/")
       # root "posts#index"
-      resources :users, only: [:show]
-      resources :events, only: [:new, :create]
+      resources :users, only: [:show] do
+        resources :user_videos, only: [:create, :destroy]
+        resources :events, only: [:new, :create]
+      end
       get '/search', to: 'searches#index'
     end
   end

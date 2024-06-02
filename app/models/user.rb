@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :user_videos
+  
   has_secure_password
 
   def self.from_omniauth(response)
