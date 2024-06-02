@@ -1,5 +1,0 @@
-# After obtaining the credentials
-credentials = authorizer.get_and_store_credentials_from_code(user_id: user.uid, code: code, base_url: 'http://localhost:5000/')
-
-# Store the credentials
-token_store.store_credentials(user.uid, credentials)
