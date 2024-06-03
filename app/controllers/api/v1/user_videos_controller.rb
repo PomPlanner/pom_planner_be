@@ -1,4 +1,4 @@
-class API::V1::UserVideosController < ApplicationController
+class Api::V1::UserVideosController < ApplicationController
   before_action :set_user
 
   def create
@@ -7,7 +7,8 @@ class API::V1::UserVideosController < ApplicationController
 
     render json: { message: 'Video added to favorites' }, status: :created
     rescue ActiveRecord::RecordNotFound => e
-      render json: ErrorSerializer.new(ErrorMessage.new(e.message)).serialize_json, status :not_found
+      render json: ErrorSerializer.new(ErrorMessage.new(e.message)).serialize_json, status: :not_found
+    end
   end
 
   def destroy
@@ -16,9 +17,9 @@ class API::V1::UserVideosController < ApplicationController
     @user_video.destroy
 
     render json: { message: 'Video removed from favorites' }, status: :ok
-    rescue ActiveRecord::ReecordNotFound => e
-      render json: ErrorSerializer.new(ErrorMessage.new(e.message)).serialize_json, status :not_found
-
+    rescue ActiveRecord::RecordNotFound => e
+      render json: ErrorSerializer.new(ErrorMessage.new(e.message)).serialize_json, status: :not_found
+    end
   end
 
   private

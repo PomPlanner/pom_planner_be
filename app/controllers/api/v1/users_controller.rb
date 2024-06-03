@@ -1,4 +1,4 @@
-class API::V1::UsersController < ApplicationController
+class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: [:show]
   before_action :require_login, only: [:show]
 
@@ -13,7 +13,7 @@ class API::V1::UsersController < ApplicationController
 
   def require_login
     unless session[:user_id]
-      redirect_to root_path, alert: "You must be logged in to access this section"
+      # redirect_to root_path, alert: "You must be logged in to access this section"
     end
   end
 end
