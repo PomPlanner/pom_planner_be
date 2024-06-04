@@ -45,14 +45,16 @@ RSpec.describe "API::V1::UserVideos", type: :request do
       post api_v1_user_user_videos_path(-1), params: video_params
       
       expect(response).to have_http_status(:not_found)
-      # expect(JSON.parse(response.body)['errors']).to eq('User not found')
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response['errors'].first['detail']).to eq("Couldn't find User with 'id'=-1")
     end
 
     it "returns an error when trying to destroy a non-existent video" do
       delete api_v1_user_user_video_path(@user1, -1)
       
       expect(response).to have_http_status(:not_found)
-      expect(JSON.parse(response.body)['errors']).to eq([{"detail"=> "Couldn't find UserVideo with 'id'=-1 [WHERE \"user_videos\".\"user_id\" = $1]"}])
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response['errors']).to eq([{"detail"=> "Couldn't find UserVideo with 'id'=-1 [WHERE \"user_videos\".\"user_id\" = $1]"}])
     end
   end
 end
