@@ -3,7 +3,7 @@ class YoutubeService
     url = 'search'
     params = {
       part: 'snippet',
-      maxResults: 5,
+      maxResults: 25,
       order: 'relevance',
       type: 'video',
       videoEmbeddable: true,
