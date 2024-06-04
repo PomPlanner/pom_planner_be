@@ -1,6 +1,14 @@
 require "rails_helper"
 
 RSpec.describe "Api::V1::Users", type: :request do
+  before do
+    OmniAuth.config.test_mode = true
+    mock_hash = Faker::Omniauth.google
+    Rails.logger.info "OmniAuth Mock Hash: #{mock_hash.inspect}"
+    Rails.application.env_config["omniauth.auth"] = mock_hash
+    # require 'pry'; binding.pry
+  end
+
   before :each do
     @user1 = create(:user)
   end
