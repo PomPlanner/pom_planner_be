@@ -1,19 +1,16 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: [:show]
   before_action :require_login, only: [:show]
 
   def show
+    @user = User.find(params[:id])
+    render json: @user
   end
 
   private
 
-  def set_user
-    @user = User.find(params[:id])
-  end
-
   def require_login
-    unless session[:user_id]
-      # redirect_to root_path, alert: "You must be logged in to access this section"
+    unless request.env["omniauth.auth"]
+      render json: { error: "You must be logged in to access this section" }, status: :unauthorized
     end
   end
 end

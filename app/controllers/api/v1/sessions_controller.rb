@@ -1,12 +1,12 @@
 class API::V1::SessionsController < ApplicationController
 
   def omniauth
-    user = User.from_omniauth(request.env['omniauth'])
-    if user.valid?
+    user = User.from_omniauth(request.env['omniauth.auth'])
+    if user.persisted?
       session[:user_id] = user.id 
-      redirect_to user_path(user)
+      redirect_to api_v1_user_path(user)
     else
-      redirect_to '/'
+      redirect_to '/', alert: "Authentication failed. Please try again."
     end
   end
 

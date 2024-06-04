@@ -30,15 +30,6 @@ class YoutubeService
     Faraday.new('https://www.googleapis.com/youtube/v3')
   end
 
-  # def self.parse_response(response)
-  #   items = response[:items] || []
-  #   items.map do |item|
-  #     YoutubeVideo.new(
-  #       title: item[:snippet][:title],
-  #       url: "https://www.youtube.com/watch?v=#{item[:id][:videoId]}"
-  #     )
-  #   end
-  # end
   def self.parse_response(response)
     if response.key?(:error)
       error_message = response[:error][:message]
@@ -47,8 +38,8 @@ class YoutubeService
       items = response[:items] || []
       items.map do |item|
         YoutubeVideo.new(
-          title: item[:snippet][:title],
-          url: "https://www.youtube.com/watch?v=#{item[:id][:videoId]}"
+          item[:snippet][:title],
+          "https://www.youtube.com/watch?v=#{item[:id][:videoId]}"
         )
       end
     end
