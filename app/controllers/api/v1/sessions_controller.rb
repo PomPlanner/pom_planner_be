@@ -1,7 +1,4 @@
 class Api::V1::SessionsController < ApplicationController
-# skip_before_action :verify_authenticity_token, only: [:omniauth]
-# protect_from_forgery with: :exception
-
   def google_oauth2
     redirect_to google_oauth2_url, allow_other_host: true
   end
@@ -14,19 +11,12 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def omniauth
-    # require 'pry'; binding.pry
-    # user = User.from_omniauth(request.env['omniauth.auth'])
-    
-    auth_info = request.env['omniauth.auth']
-    # require 'pry'; binding.pry
-    user = User.from_omniauth(auth_info)
+    user = ::User.from_omniauth(request.env['omniauth.auth'])
     if user.persisted?
       session[:user_id] = user.id 
       redirect_to "http://localhost:3000/auth/google_oauth2/callback?user_id=#{user.id}"
-      # redirect_to api_v1_user_path(user)
     else
       redirect_to "http://localhost:3000/", alert: "Authentication failed. Please try again."
-      # redirect_to '/', alert: "Authentication failed. Please try again."
     end
   end
 
@@ -34,5 +24,4 @@ class Api::V1::SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to root_path, notice: "Logged out!"
   end
-
 end
