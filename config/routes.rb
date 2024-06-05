@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   namespace :api do
     namespace :v1 do
-      get '/auth/:provider/callback', to: 'sessions#omniauth'
+      post '/auth/google_oauth2', to: 'sessions#google_oauth2'
+      get '/auth/google_oauth2', to: 'sessions#google_oauth2'
+      get '/auth/google_oauth2/callback', to: 'sessions#omniauth'
       delete '/logout', to: 'sessions#destroy'
       get '/auth/failure', to: redirect('/')
       # Defines the root path route ("/")

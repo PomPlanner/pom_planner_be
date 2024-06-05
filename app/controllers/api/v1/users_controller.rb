@@ -9,6 +9,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def require_login
+    # unless session[:user_id].present?
     unless request.env["omniauth.auth"]
       render json: { error: "You must be logged in to access this section" }, status: :unauthorized
     end

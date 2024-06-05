@@ -59,10 +59,12 @@ end
 gem 'dotenv-rails'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
-gem 'omniauth-rails_csrf_protection'
+# gem 'omniauth-openid'
+# gem 'omniauth-rails_csrf_protection'
 gem 'rack-cors', require: 'rack/cors'
 gem 'googleauth'
 gem 'google-apis-youtube_v3'
 gem 'google-apis-calendar_v3'
 gem 'oauth2'
 gem 'ostruct'
+

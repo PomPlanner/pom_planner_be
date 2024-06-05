@@ -12,14 +12,14 @@ class GoogleCalendarService
   def initialize(user)
     @user = user
     @service = Google::Apis::CalendarV3::CalendarService.new
-    # require 'pry'; binding.pry
+
     # @service.client_options.application_name = APPLICATION_NAME
     @service.authorization = user_credentials(user)
     # require 'pry'; binding.pry
   end
 
   def user_credentials(user)
-    # require 'pry'; binding.pry
+  
     client_id = CREDENTIALS[:client_id]
     client_secret = CREDENTIALS[:client_secret]
     token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKEN_PATH)

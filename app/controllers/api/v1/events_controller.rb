@@ -1,4 +1,4 @@
-class API::V1::EventsController < ApplicationController
+class Api::V1::EventsController < ApplicationController
   before_action :authenticate_user!
 
   def new

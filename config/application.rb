@@ -21,8 +21,13 @@ Bundler.require(*Rails.groups)
 module PomPlannerBe
   class Application < Rails::Application
     config.load_defaults 7.1
+
+    # Add middleware for session management and flash messages
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, key: '_your_app_session'
+    config.middleware.use ActionDispatch::Flash
+    # config.middleware.use ActionDispatch::RequestForgeryProtection, exceptions: []
+
     # Initialize configuration defaults for originally generated Rails version.
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
