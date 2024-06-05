@@ -1,4 +1,4 @@
-class API::V1::SearchesController < ApplicationController
+class Api::V1::SearchesController < ApplicationController
   def index
     if params[:query].present? && params[:video_duration].present?
       query_keywords = params[:query]
