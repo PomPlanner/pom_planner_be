@@ -16,12 +16,12 @@ class User < ApplicationRecord
   #   user
   # end
   def self.from_omniauth(response)
-    Rails.logger.info "OmniAuth response: #{response.inspect}"
+    # require 'pry'; binding.pry
     User.find_or_create_by(uid: response[:uid], provider: response[:provider]) do |user|
       user.name = response[:info][:name]
       user.image = response[:info][:image]
       user.email = response[:info][:email]
-      user.access_token = response[:credentials][:token] # Store access token
+      user.token = response[:credentials][:token] # Store access token
       user.refresh_token = response[:credentials][:refresh_token] # Store refresh token
       user.password = SecureRandom.hex(15)
     end
