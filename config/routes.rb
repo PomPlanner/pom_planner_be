@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post '/auth/google_oauth2', to: 'sessions#google_oauth2'
       get '/auth/google_oauth2', to: 'sessions#google_oauth2'
-      get '/auth/:provider/callback', to: 'sessions#omniauth'
+      get '/auth/google_oauth2/callback', to: 'sessions#omniauth'
       delete '/logout', to: 'sessions#destroy'
       get '/auth/failure', to: redirect('/')
       # Defines the root path route ("/")
