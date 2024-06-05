@@ -16,10 +16,9 @@ class Api::V1::SessionsController < ApplicationController
   def omniauth
     # require 'pry'; binding.pry
     # user = User.from_omniauth(request.env['omniauth.auth'])
-    Rails.logger.info "OmniAuth auth info: #{request.env['omniauth.auth'].inspect}"
-    Rails.logger.info "OmniAuth callback received: #{request.env['omniauth.auth'].inspect}" # Debug log
+    
     auth_info = request.env['omniauth.auth']
-    require 'pry'; binding.pry
+    # require 'pry'; binding.pry
     user = User.from_omniauth(auth_info)
     if user.persisted?
       session[:user_id] = user.id 

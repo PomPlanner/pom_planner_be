@@ -8,7 +8,5 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     image_size: 50,
     access_type: 'offline'
   }
-  # require 'pry'; binding.pry
+  
 end
-
-# Rails.application.config.middleware.use OmniAuth::Rails::CsrfProtection
