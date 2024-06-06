@@ -27,7 +27,7 @@ module PomPlannerBe
     config.middleware.use ActionDispatch::Session::CookieStore, key: '_your_app_session'
     config.middleware.use ActionDispatch::Flash
     # config.middleware.use ActionDispatch::RequestForgeryProtection, exceptions: []
-
+    config.active_model_serializer = :json_api
     # Initialize configuration defaults for originally generated Rails version.
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do

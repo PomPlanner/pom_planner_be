@@ -2,8 +2,8 @@ class Api::V1::UsersController < ApplicationController
   before_action :require_login, only: [:show]
 
   def show
-    @user = User.find(params[:id])
-    render json: @user
+    user = User.find(params[:id])
+    render json: UserSerializer.new(user).as_json
   end
 
   private

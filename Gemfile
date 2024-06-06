@@ -67,4 +67,5 @@ gem 'google-apis-youtube_v3'
 gem 'google-apis-calendar_v3'
 gem 'oauth2'
 gem 'ostruct'
+gem "jsonapi-serializer"
 

@@ -12,6 +12,7 @@ class YoutubeService
     }
 
     response = call_api(url, params)
+    # require 'pry'; binding.pry
     parse_response(response)
   end
 
@@ -31,6 +32,19 @@ class YoutubeService
   end
 
   def self.parse_response(response)
+    # require 'pry'; binding.pry
+    # if response.key?(:error)
+    #   error_message = response[:error][:message]
+    #   raise StandardError, "YouTube API error: #{error_message}"
+    # else
+    #   items = response[:items] || []
+    #   items.map do |item|
+    #     YoutubeVideo.new(
+    #       item[:snippet][:title],
+    #       "https://www.youtube.com/watch?v=#{item[:id][:videoId]}"
+    #     )
+    #   end
+    # end
     if response.key?(:error)
       error_message = response[:error][:message]
       raise StandardError, "YouTube API error: #{error_message}"
@@ -38,8 +52,13 @@ class YoutubeService
       items = response[:items] || []
       items.map do |item|
         YoutubeVideo.new(
-          item[:snippet][:title],
-          "https://www.youtube.com/watch?v=#{item[:id][:videoId]}"
+          id: { videoId: item[:id][:videoId] },
+          snippet: item[:snippet],
+          contentDetails: item[:contentDetails], # Add this line to include contentDetails
+          title: item[:snippet][:title],
+          url: "https://www.youtube.com/watch?v=#{item[:id][:videoId]}",
+          duration: item[:contentDetails]&.dig(:duration), # Safely access duration if available
+          thumbnail_url: item[:snippet][:thumbnails][:default][:url]
         )
       end
     end

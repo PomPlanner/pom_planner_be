@@ -1,6 +1,11 @@
 class Api::V1::UserVideosController < ApplicationController
   before_action :set_user
 
+  def index
+    @favorite_videos = @user.favorite_videos
+    render json: @favorite_videos
+  end
+  
   def create
     begin
       @user_video = @user.user_videos.create!(user_video_params)

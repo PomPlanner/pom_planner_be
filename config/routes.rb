@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       # Defines the root path route ("/")
       # root "posts#index"
       resources :users, only: [:show] do
-        resources :user_videos, only: [:create, :destroy]
+        resources :user_videos, only: [:index, :create, :destroy]
         resources :events, only: [:new, :create]
       end
       get '/search', to: 'searches#index'
