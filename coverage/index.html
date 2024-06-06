@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-06-06T00:19:00-04:00">2024-06-06T00:19:00-04:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-06-06T14:04:25-04:00">2024-06-06T14:04:25-04:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,7 +23,7 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="green">
-  94.17%
+  93.66%
 </span>
 
      </span>
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>206</b> relevant lines,
-    <span class="green"><b>194</b> lines covered</span> and
-    <span class="red"><b>12</b> lines missed. </span>
+    <b>205</b> relevant lines,
+    <span class="green"><b>192</b> lines covered</span> and
+    <span class="red"><b>13</b> lines missed. </span>
     (<span class="green">
-  94.17%
+  93.66%
 </span>
 )
   </div>
@@ -83,12 +83,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#01e60ebd5433e74445c1ec4b9d0b0944b8531743" class="src_link" title="app/controllers/api/v1/users_controller.rb">app/controllers/api/v1/users_controller.rb</a></td>
-            <td class="yellow strong cell--number t-file__coverage">88.89 %</td>
-            <td class="cell--number">17</td>
-            <td class="cell--number">9</td>
+            <td class="red strong cell--number t-file__coverage">75.00 %</td>
+            <td class="cell--number">18</td>
             <td class="cell--number">8</td>
-            <td class="cell--number">1</td>
-            <td class="cell--number">0.89</td>
+            <td class="cell--number">6</td>
+            <td class="cell--number">2</td>
+            <td class="cell--number">0.75</td>
             
           </tr>
         
@@ -117,7 +117,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#6608706b87173b9dc13fd007df9519a17efc8ad1" class="src_link" title="app/models/user.rb">app/models/user.rb</a></td>
             <td class="red strong cell--number t-file__coverage">36.36 %</td>
-            <td class="cell--number">15</td>
+            <td class="cell--number">16</td>
             <td class="cell--number">11</td>
             <td class="cell--number">4</td>
             <td class="cell--number">7</td>
@@ -172,7 +172,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#472625a2bb1f30c2320e893ef57a49c5b9d6e648" class="src_link" title="app/serializers/user_serializer.rb">app/serializers/user_serializer.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">5</td>
+            <td class="cell--number">4</td>
             <td class="cell--number">3</td>
             <td class="cell--number">3</td>
             <td class="cell--number">0</td>
@@ -362,7 +362,7 @@
 
             
 
-            <code class="ruby">    @favorite_videos = @user.favorite_videos</code>
+            <code class="ruby">    @favorite_videos = @user.user_videos</code>
           </li>
         </div>
       
@@ -373,7 +373,7 @@
 
             
 
-            <code class="ruby">    render json: @favorite_videos</code>
+            <code class="ruby">    render json: favorite_videos.as_json(only: [:id, :title, :url, :thumbnail_url])</code>
           </li>
         </div>
       
@@ -714,7 +714,7 @@
 
             
 
-            <code class="ruby">    params.require(:user_video).permit(:title, :url)</code>
+            <code class="ruby">    params.require(:user_video).permit(:title, :url, :thumbnail_url)</code>
           </li>
         </div>
       
@@ -749,8 +749,8 @@
   <div class="header">
     <h3>app/controllers/api/v1/users_controller.rb</h3>
     <h4>
-      <span class="yellow">
-  88.89%
+      <span class="red">
+  75.0%
 </span>
 
       lines covered
@@ -759,9 +759,9 @@
     
 
     <div class="t-line-summary">
-      <b>9</b> relevant lines.
-      <span class="green"><b>8</b> lines covered</span> and
-      <span class="red"><b>1</b> lines missed.</span>
+      <b>8</b> relevant lines.
+      <span class="green"><b>6</b> lines covered</span> and
+      <span class="red"><b>2</b> lines missed.</span>
     </div>
 
     
@@ -783,13 +783,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="2">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="2">
+            
             
 
             
 
-            <code class="ruby">  before_action :require_login, only: [:show]</code>
+            <code class="ruby">  # before_action :require_login, only: [:show]</code>
           </li>
         </div>
       
@@ -833,7 +833,7 @@
 
             
 
-            <code class="ruby">    render json: UserSerializer.new(user).as_json</code>
+            <code class="ruby">    render json: UserSerializer.new(user).serializable_hash</code>
           </li>
         </div>
       
@@ -844,7 +844,7 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    # require &#39;pry&#39;; binding.pry</code>
           </li>
         </div>
       
@@ -855,12 +855,23 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="9">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="9">
+          <li class="covered" data-hits="1" data-linenumber="10">
             <span class="hits">1</span>
             
 
@@ -871,7 +882,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="10">
+          <li class="never" data-hits="" data-linenumber="11">
             
             
 
@@ -882,7 +893,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="11">
+          <li class="covered" data-hits="1" data-linenumber="12">
             <span class="hits">1</span>
             
 
@@ -893,7 +904,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="12">
+          <li class="never" data-hits="" data-linenumber="13">
             
             
 
@@ -904,8 +915,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="13">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="14">
+            
             
 
             
@@ -915,7 +926,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="14">
+          <li class="missed" data-hits="0" data-linenumber="15">
             
             
 
@@ -926,7 +937,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="15">
+          <li class="never" data-hits="" data-linenumber="16">
             
             
 
@@ -937,7 +948,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="16">
+          <li class="never" data-hits="" data-linenumber="17">
             
             
 
@@ -948,7 +959,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="17">
+          <li class="never" data-hits="" data-linenumber="18">
             
             
 
@@ -1146,7 +1157,7 @@
 
             
 
-            <code class="ruby">  has_many :user_videos</code>
+            <code class="ruby">  has_many :user_videos, dependent: :destroy</code>
           </li>
         </div>
       
@@ -1267,7 +1278,7 @@
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">      # require &#39;pry&#39;; binding.pry</code>
           </li>
         </div>
       
@@ -1278,12 +1289,23 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    end</code>
           </li>
         </div>
       
         <div>
           <li class="never" data-hits="" data-linenumber="15">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="16">
             
             
 
@@ -1923,17 +1945,6 @@
       
         <div>
           <li class="never" data-hits="" data-linenumber="4">
-            
-            
-
-            
-
-            <code class="ruby">  # has_many :user_videos</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="5">
             
             
 
