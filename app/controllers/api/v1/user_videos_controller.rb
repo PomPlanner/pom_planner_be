@@ -2,8 +2,8 @@ class Api::V1::UserVideosController < ApplicationController
   before_action :set_user
 
   def index
-    @favorite_videos = @user.favorite_videos
-    render json: @favorite_videos
+    @favorite_videos = @user.user_videos
+    render json: favorite_videos.as_json(only: [:id, :title, :url, :thumbnail_url])
   end
   
   def create
@@ -34,6 +34,6 @@ class Api::V1::UserVideosController < ApplicationController
   end
 
   def user_video_params
-    params.require(:user_video).permit(:title, :url)
+    params.require(:user_video).permit(:title, :url, :thumbnail_url)
   end
 end

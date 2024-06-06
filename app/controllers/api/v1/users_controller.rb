@@ -1,9 +1,10 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :require_login, only: [:show]
+  # before_action :require_login, only: [:show]
 
   def show
     user = User.find(params[:id])
-    render json: UserSerializer.new(user).as_json
+    render json: UserSerializer.new(user).serializable_hash
+    # require 'pry'; binding.pry
   end
 
   private

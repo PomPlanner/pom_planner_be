@@ -14,6 +14,7 @@ class Api::V1::SessionsController < ApplicationController
     user = ::User.from_omniauth(request.env['omniauth.auth'])
     if user.persisted?
       session[:user_id] = user.id 
+      # require 'pry'; binding.pry
       redirect_to "http://localhost:3000/auth/google_oauth2/callback?user_id=#{user.id}"
     else
       redirect_to "http://localhost:3000/", alert: "Authentication failed. Please try again."

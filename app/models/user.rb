@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :user_videos
+  has_many :user_videos, dependent: :destroy
   has_secure_password
 
   def self.from_omniauth(response)
@@ -10,6 +10,7 @@ class User < ApplicationRecord
       user.token = response[:credentials][:token] # Store access token
       user.refresh_token = response[:credentials][:refresh_token] # Store refresh token
       user.password = SecureRandom.hex(15)
+      # require 'pry'; binding.pry
     end
   end
 end
