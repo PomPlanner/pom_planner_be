@@ -3,7 +3,7 @@ class Api::V1::UserVideosController < ApplicationController
 
   def index
     @favorite_videos = @user.user_videos
-    render json: favorite_videos.as_json(only: [:id, :title, :url, :thumbnail_url])
+    render json: @favorite_videos.as_json(only: [:id, :title, :url, :thumbnail_url])
   end
   
   def create
