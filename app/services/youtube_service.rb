@@ -32,19 +32,7 @@ class YoutubeService
   end
 
   def self.parse_response(response)
-    # require 'pry'; binding.pry
-    # if response.key?(:error)
-    #   error_message = response[:error][:message]
-    #   raise StandardError, "YouTube API error: #{error_message}"
-    # else
-    #   items = response[:items] || []
-    #   items.map do |item|
-    #     YoutubeVideo.new(
-    #       item[:snippet][:title],
-    #       "https://www.youtube.com/watch?v=#{item[:id][:videoId]}"
-    #     )
-    #   end
-    # end
+
     if response.key?(:error)
       error_message = response[:error][:message]
       raise StandardError, "YouTube API error: #{error_message}"
