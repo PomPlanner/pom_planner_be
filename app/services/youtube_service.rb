@@ -42,10 +42,10 @@ class YoutubeService
         YoutubeVideo.new(
           id: { videoId: item[:id][:videoId] },
           snippet: item[:snippet],
-          contentDetails: item[:contentDetails], # Add this line to include contentDetails
+          contentDetails: item[:contentDetails],
           title: item[:snippet][:title],
           url: "https://www.youtube.com/watch?v=#{item[:id][:videoId]}",
-          duration: item[:contentDetails]&.dig(:duration), # Safely access duration if available
+          duration: item[:contentDetails]&.dig(:duration), 
           thumbnail_url: item[:snippet][:thumbnails][:default][:url]
         )
       end
