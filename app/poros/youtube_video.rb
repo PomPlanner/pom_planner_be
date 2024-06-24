@@ -1,5 +1,5 @@
 class YoutubeVideo
-  attr_reader :id, :title, :url, :duration, :thumbnail_url
+  attr_reader :id, :title, :url, :duration, :embed_url
 
   def initialize(data)
     # require 'pry'; binding.pry
@@ -7,6 +7,6 @@ class YoutubeVideo
     @title = data[:snippet][:title]
     @url = "https://www.youtube.com/watch?v=#{@id}"
     # @duration = data[:contentDetails][:duration]
-    @thumbnail_url = data[:snippet][:thumbnails][:default][:url]
+    @embed_url = "https://www.youtube.com/embed/#{@id}"
   end
 end
