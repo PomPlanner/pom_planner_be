@@ -11,9 +11,14 @@ class YoutubeService
       videoDuration: video_duration
     }
 
-    response = call_api(url, params)
+    # parse_response(response)
     # require 'pry'; binding.pry
-    parse_response(response)
+    response = call_api(url, params)
+    items = response[:items] || []
+    video_ids = items.map { |item| item[:id][:videoId] }
+    video_details = fetch_video_details(video_ids)
+
+    items.map { |item| YoutubeVideo.new(item, video_details[item[:id][:videoId]]) }
   end
 
   private
@@ -31,6 +36,24 @@ class YoutubeService
     Faraday.new('https://www.googleapis.com/youtube/v3')
   end
 
+  def self.fetch_video_details(video_ids)
+    url = 'videos'
+    params = {
+      part: 'contentDetails',
+      id: video_ids.join(','),
+      key: Rails.application.credentials.google[:api_key]
+    }
+
+    response = call_api(url, params)
+    details = response[:items] || []
+
+    details.each_with_object({}) do |item, hash|
+      video_id = item[:id]
+      duration = item[:contentDetails][:duration]
+      hash[video_id] = { duration: duration }
+    end
+  end
+  
   def self.parse_response(response)
     if response.key?(:error)
       error_message = response[:error][:message]
