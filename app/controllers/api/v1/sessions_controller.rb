@@ -21,9 +21,7 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def destroy
-    user_id = params[:user_id] || session[:user_id]
-    user = User.find_by(id: user_id)
-  
+    # require 'pry'; binding.pry
     session[:user_id] = nil
     reset_session
     render json: { message: "Logged out successfully" }, status: :ok
