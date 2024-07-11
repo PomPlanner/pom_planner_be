@@ -1,14 +1,14 @@
-class Api::V1::UserVideosController < ApplicationController
+class Api::V1::VideosController < ApplicationController
   before_action :set_user
 
   def index
     @favorite_videos = @user.user_videos
-    render json: @favorite_videos.as_json(only: [:id, :title, :url, :thumbnail_url])
+    render json: @favorite_videos.as_json(only: [:id, :title, :url, :embed_url, :duration, :duration_category])
   end
   
   def create
     begin
-      @user_video = @user.user_videos.create!(user_video_params)
+      @user_video = @user.user_videos.create!(video_params)
       render json: { message: 'Video added to favorites' }, status: :created
     rescue ActiveRecord::RecordNotFound => e
       render json: ErrorSerializer.new(ErrorMessage.new(e.message)).serialize_json, status: :not_found
@@ -33,7 +33,7 @@ class Api::V1::UserVideosController < ApplicationController
     render json: ErrorSerializer.new(ErrorMessage.new(e.message)).serialize_json, status: :not_found
   end
 
-  def user_video_params
-    params.require(:user_video).permit(:title, :url, :thumbnail_url)
+  def video_params
+    params.require(:video).permit(:title, :url, :embed_url, :duration, :duration_category)
   end
 end
