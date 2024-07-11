@@ -12,7 +12,7 @@ class YoutubeVideoSerializer
     video.formatted_duration
   end
 
-  attribute :category do |video|
-    video.category
+  attribute :duration_category do |video|
+    video.duration_category
   end
 end

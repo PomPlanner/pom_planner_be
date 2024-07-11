@@ -14,7 +14,7 @@ class YoutubeVideo
     iso8601_duration_to_human_readable(@duration)
   end
 
-  def category
+  def duration_category
     total_seconds = iso8601_duration_to_seconds(@duration)
     if total_seconds < 4 * 60
       'short'
