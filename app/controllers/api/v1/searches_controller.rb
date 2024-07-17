@@ -5,6 +5,7 @@ class Api::V1::SearchesController < ApplicationController
       video_duration = params[:video_duration]
       videos = YoutubeService.search(query_keywords, video_duration)
       render json: YoutubeVideoSerializer.new(videos).serializable_hash.to_json
+      # require 'pry'; binding.pry
     else
       render json: { error: "Query and video duration parameters are required" }, status: :bad_request
     end
