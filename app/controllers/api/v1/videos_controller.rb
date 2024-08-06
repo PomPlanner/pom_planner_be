@@ -3,26 +3,22 @@ class Api::V1::VideosController < ApplicationController
 
   def index
     @favorite_videos = @user.user_videos
-    render json: @favorite_videos.as_json(only: [:id, :title, :url, :embed_url, :duration, :duration_category])
+    render json: YoutubeVideoSerializer.new(@favorite_videos).serializable_hash
   end
   
   def create
-    begin
-      @user_video = @user.user_videos.create!(video_params)
-      render json: { message: 'Video added to favorites' }, status: :created
-    rescue ActiveRecord::RecordNotFound => e
-      render json: ErrorSerializer.new(ErrorMessage.new(e.message)).serialize_json, status: :not_found
-    end
+    @user_video = @user.user_videos.create!(video_params)
+    render json: { message: 'Video added to favorites' }, status: :created
+  rescue ActiveRecord::RecordNotFound => e
+    render json: ErrorSerializer.new(ErrorMessage.new(e.message)).serialize_json, status: :not_found
   end
 
   def destroy
-    begin
-      @user_video = @user.user_videos.find(params[:id])
-      @user_video.destroy
-      render json: { message: 'Video removed from favorites' }, status: :ok
-    rescue ActiveRecord::RecordNotFound => e
-      render json: ErrorSerializer.new(ErrorMessage.new(e.message)).serialize_json, status: :not_found
-    end
+    @user_video = @user.user_videos.find(params[:id])
+    @user_video.destroy
+    render json: { message: 'Video removed from favorites' }, status: :ok
+  rescue ActiveRecord::RecordNotFound => e
+    render json: ErrorSerializer.new(ErrorMessage.new(e.message)).serialize_json, status: :not_found
   end
 
   private

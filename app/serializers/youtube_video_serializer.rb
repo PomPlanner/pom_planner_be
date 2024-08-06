@@ -2,10 +2,14 @@ class YoutubeVideoSerializer
   include JSONAPI::Serializer
 
   set_type :youtube_video
-  attributes :title, :url
+  attributes :title, :url, :embed_url, :duration, :duration_category
 
+  attribute :id do |video|
+    video.id
+  end
+  
   attribute :embed_url do |video|
-    "https://www.youtube.com/embed/#{video.id}"
+    video.embed_url
   end
 
   attribute :duration do |video|
