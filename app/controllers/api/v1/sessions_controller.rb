@@ -11,10 +11,9 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def omniauth
-    user = ::User.from_omniauth(request.env['omniauth.auth'])
+    user = User.from_omniauth(request.env['omniauth.auth'])
     if user.persisted?
       session[:user_id] = user.id 
-      # require 'pry'; binding.pry
       redirect_to "http://localhost:3000/auth/google_oauth2/callback?user_id=#{user.id}"
     else
       redirect_to "http://localhost:3000/", alert: "Authentication failed. Please try again."
@@ -22,7 +21,9 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def destroy
+    # require 'pry'; binding.pry
     session[:user_id] = nil
-    redirect_to root_path, notice: "Logged out!"
+    reset_session
+    render json: { message: "Logged out successfully" }, status: :ok
   end
 end

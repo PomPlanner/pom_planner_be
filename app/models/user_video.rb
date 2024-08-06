@@ -1,5 +1,6 @@
 class UserVideo < ApplicationRecord
   belongs_to :user
-
-  validates :title, :url, presence: true
+  include VideoMethods
+  
+  validates :title, :url, :embed_url, :duration, :duration_category, presence: true
 end
