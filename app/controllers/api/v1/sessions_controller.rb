@@ -7,7 +7,7 @@ class Api::V1::SessionsController < ApplicationController
     client_id = ENV['GOOGLE_CLIENT_ID']
     redirect_uri = CGI.escape('http://localhost:5000/api/v1/auth/google_oauth2/callback')
     scope = CGI.escape('email profile https://www.googleapis.com/auth/calendar.events')
-    "https://accounts.google.com/o/oauth2/v2/auth?client_id=#{client_id}&redirect_uri=#{redirect_uri}&response_type=code&scope=#{scope}"
+    "https://accounts.google.com/o/oauth2/v2/auth?client_id=#{client_id}&redirect_uri=#{redirect_uri}&response_type=code&scope=#{scope}&prompt=select_account"
   end
 
   def omniauth
@@ -21,9 +21,10 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def destroy
-    # require 'pry'; binding.pry
     session[:user_id] = nil
     reset_session
     render json: { message: "Logged out successfully" }, status: :ok
+  rescue => e
+    render json: { error: "Failed to log out: #{e.message}" }, status: :internal_server_error
   end
 end
