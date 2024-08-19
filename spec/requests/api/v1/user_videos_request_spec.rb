@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "API::V1::UserVideos", type: :request do
   before :each do
     @user1 = create(:user)
+    @user2 = create(:user)
     @video1 = create(:user_video, user: @user1)
     @video2 = create(:user_video, user: @user1)
   end
@@ -13,9 +14,23 @@ RSpec.describe "API::V1::UserVideos", type: :request do
 
       expect(response).to have_http_status(:ok)
       parsed_response = JSON.parse(response.body)
+      
+      expect(parsed_response).to be_a(Hash)
+      expect(parsed_response["data"]).to be_an(Array)
       expect(parsed_response["data"].length).to eq(2)
       expect(parsed_response["data"][0]["attributes"]["title"]).to eq(@video1.title)
       expect(parsed_response["data"][1]["attributes"]["title"]).to eq(@video2.title)
+    end
+    
+    it "returns an empty array if the user does not have any favorite videos" do
+      get api_v1_user_videos_path(@user2)
+
+      expect(response).to have_http_status(:ok)
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response).to be_a(Hash)
+      expect(parsed_response["data"]).to be_an(Array)
+      expect(parsed_response["data"]).to be_empty
+      expect(parsed_response["data"].length).to eq(0)
     end
     
     it "saves a new user video favorite" do

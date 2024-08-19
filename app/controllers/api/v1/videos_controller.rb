@@ -3,7 +3,11 @@ class Api::V1::VideosController < ApplicationController
 
   def index
     @favorite_videos = @user.user_videos
-    render json: YoutubeVideoSerializer.new(@favorite_videos).serializable_hash
+    if @favorite_videos.any?
+      render json: YoutubeVideoSerializer.new(@favorite_videos).serializable_hash
+    else
+      render json: { data: [] }, status: :ok
+    end
   end
   
   def create
