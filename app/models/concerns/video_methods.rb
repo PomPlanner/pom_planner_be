@@ -1,4 +1,3 @@
-# app/models/concerns/video_methods.rb
 module VideoMethods
   extend ActiveSupport::Concern
 
@@ -10,7 +9,7 @@ module VideoMethods
     end
   end
 
-  def duration_category
+  def calculate_duration_category
     total_seconds = if iso8601_duration_format?
                       iso8601_duration_to_seconds(self.duration)
                     else
@@ -21,15 +20,13 @@ module VideoMethods
       'short'
     elsif total_seconds <= 20 * 60
       'medium'
-    else
-      'long'
     end
   end
 
   private
 
   def iso8601_duration_format?
-    self.duration.start_with?('PT')
+    self.duration.present? && self.duration.start_with?('PT')
   end
 
   def iso8601_duration_to_human_readable(duration)
