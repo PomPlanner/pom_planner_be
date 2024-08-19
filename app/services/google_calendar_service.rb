@@ -46,28 +46,25 @@ class GoogleCalendarService
     event = Google::Apis::CalendarV3::Event.new(
       summary: summary,
       description: "#{description}\nWatch the video here: #{video_url}\nGet out of your seat!",
-      start: Google::Apis::CalendarV3::EventDateTime.new(date_time: start_time),
-      end: Google::Apis::CalendarV3::EventDateTime.new(date_time: end_time)
-    )
-
-    # Add reminders
-    event.reminders = Google::Apis::CalendarV3::Event::Reminders.new(
-      use_default: false,
-      overrides: [
-        Google::Apis::CalendarV3::EventReminder.new(reminder_method: 'popup', minutes: 10),
-        Google::Apis::CalendarV3::EventReminder.new(reminder_method: 'popup', minutes: 0)
-      ]
+      start: Google::Apis::CalendarV3::EventDateTime.new(date_time: start_time.utc.iso8601),
+      end: Google::Apis::CalendarV3::EventDateTime.new(date_time: end_time.utc.iso8601),
+      reminders: Google::Apis::CalendarV3::Event::Reminders.new(
+        use_default: false,
+        overrides: [
+          Google::Apis::CalendarV3::EventReminder.new(reminder_method: 'popup', minutes: 10),
+          Google::Apis::CalendarV3::EventReminder.new(reminder_method: 'popup', minutes: 0)
+        ]
+      )
     )
 
     @service.insert_event('primary', event)
     event
   end
 
-
   def generate_event_link(event_params)
     start_time = event_params[:start_time].to_datetime.utc.iso8601
     video_duration = event_params[:video_duration]
-    end_time = calculate_end_time(event_params[:start_time].to_datetime, video_duration).utc.iso8601
+    end_time = calculate_end_time(event_params[:start_time].to_datetime.utc, video_duration).iso8601
 
     event_description = "Watch this video: #{event_params[:description]}"
 
@@ -77,7 +74,6 @@ class GoogleCalendarService
     event_link += "&dates=#{start_time}/#{end_time}"
     event_link
   end
-
 
   private
 
