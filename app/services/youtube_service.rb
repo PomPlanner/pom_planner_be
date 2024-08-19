@@ -29,6 +29,11 @@ class YoutubeService
       request.params[:key] = Rails.application.credentials.google[:api_key]
     end
 
+    if response.status != 200
+      parsed_response = JSON.parse(response.body, symbolize_names: true)
+      raise StandardError, "YouTube API error: #{parsed_response[:error][:message]}"
+    end
+    
     JSON.parse(response.body, symbolize_names: true)
   end
 

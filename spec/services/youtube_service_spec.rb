@@ -12,9 +12,9 @@ RSpec.describe 'YoutubeService', type: :service do
         expect(videos).to be_an(Array)
         expect(videos).to all(be_a(YoutubeVideo))
         expect(videos.first.title).to be_a(String)
-        expect(videos.first.title).to eq("PERFECT 5 Minute Posture Routine (FIX YOUR SIT!)")
+        expect(videos.first.title).to eq("DO THIS TO IMPROVE YOUR POSTURE! #shorts")
         expect(videos.first.url).to be_a(String)
-        expect(videos.first.url).to eq("https://www.youtube.com/watch?v=u9OQMBPrFgI")
+        expect(videos.first.url).to eq("https://www.youtube.com/watch?v=D0izNXUxKwM")
         expect(videos.count).to be_between(1, 25).inclusive
       end
     end

@@ -4,6 +4,8 @@ require 'googleauth/stores/file_token_store'
 require 'yaml'
 
 class GoogleCalendarService
+  include VideoMethods
+
   APPLICATION_NAME = 'PomPlanner'.freeze
   CREDENTIALS = { client_id: ENV['GOOGLE_CLIENT_ID'], client_secret: ENV['GOOGLE_CLIENT_SECRET'] }
   TOKEN_PATH = 'token.yaml'.freeze
@@ -12,9 +14,7 @@ class GoogleCalendarService
   def initialize(user)
     @user = user
     @service = Google::Apis::CalendarV3::CalendarService.new
-    # @service.client_options.application_name = APPLICATION_NAME
     @service.authorization = user_credentials(user)
-    # require 'pry'; binding.pry
   end
 
   def user_credentials(user)
@@ -32,7 +32,7 @@ class GoogleCalendarService
       scope: SCOPE,
       refresh_token: refresh_token,
       access_token: access_token,
-      additional_parameters: { 'access_type' => 'offline' } # Include this if you want to obtain a refresh token
+      additional_parameters: { 'access_type' => 'offline' }
     )
    
     credentials.fetch_access_token! if credentials.expired?
@@ -40,7 +40,9 @@ class GoogleCalendarService
     credentials
   end
 
-  def create_event_with_video(summary, description, start_time, end_time, video_url)
+  def create_event_with_video(summary, description, start_time, video_duration, video_url)
+    end_time = start_time + iso8601_duration_to_seconds(video_duration).seconds
+
     event = Google::Apis::CalendarV3::Event.new(
       summary: summary,
       description: "#{description}\nWatch the video here: #{video_url}\nGet out of your seat!",
@@ -53,29 +55,33 @@ class GoogleCalendarService
       use_default: false,
       overrides: [
         Google::Apis::CalendarV3::EventReminder.new(reminder_method: 'popup', minutes: 10),
-        Google::Apis::CalendarV3::EventReminder.new(reminder_method: 'popup', minutes: 0), # At start
-        Google::Apis::CalendarV3::EventReminder.new(reminder_method: 'popup', minutes: -10) # At end
+        Google::Apis::CalendarV3::EventReminder.new(reminder_method: 'popup', minutes: 0)
       ]
     )
 
     @service.insert_event('primary', event)
+    event
   end
+
 
   def generate_event_link(event_params)
     start_time = event_params[:start_time].to_datetime.rfc3339
-    end_time = event_params[:end_time].to_datetime.rfc3339
+    video_duration = event_params[:video_duration]
+    end_time = calculate_end_time(event_params[:start_time].to_datetime, video_duration).rfc3339
 
-    event = Google::Apis::CalendarV3::Event.new(
-      summary: event_params[:summary],
-      description: event_params[:description],
-      start: Google::Apis::CalendarV3::EventDateTime.new(date_time: start_time),
-      end: Google::Apis::CalendarV3::EventDateTime.new(date_time: end_time)
-    )
+    event_description = "Watch this video: #{event_params[:description]}"
 
     event_link = "https://www.google.com/calendar/render?action=TEMPLATE"
-    event_link += "&text=#{URI.encode(event.summary)}"
-    event_link += "&details=#{URI.encode(event.description)}"
+    event_link += "&text=#{URI.encode_www_form_component(event_params[:summary])}"
+    event_link += "&details=#{URI.encode_www_form_component(event_description)}"
     event_link += "&dates=#{start_time}/#{end_time}"
     event_link
+  end
+
+  private
+
+  def calculate_end_time(start_time, duration)
+    total_seconds = iso8601_duration_to_seconds(duration)
+    start_time + total_seconds.seconds
   end
 end
