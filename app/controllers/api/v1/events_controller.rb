@@ -4,8 +4,8 @@ class Api::V1::EventsController < ApplicationController
     user = User.find(params[:user_id])
     video = user.user_videos.find(params[:video_id])
 
-    start_time = params[:start_time]
-    end_time = params[:end_time]
+    start_time = params[:start_time].to_datetime.utc
+    video_duration = video.duration
 
     event_params = {
       summary: params[:summary],

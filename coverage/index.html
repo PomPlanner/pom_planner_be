@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-08-19T17:02:59-04:00">2024-08-19T17:02:59-04:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-08-19T18:13:35-04:00">2024-08-19T18:13:35-04:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -205,7 +205,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#becb9fd49adfb40eb03f968c11821ee5f6ba6499" class="src_link" title="app/services/google_calendar_service.rb">app/services/google_calendar_service.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">87</td>
+            <td class="cell--number">88</td>
             <td class="cell--number">44</td>
             <td class="cell--number">44</td>
             <td class="cell--number">0</td>
@@ -271,7 +271,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#81cf44618ea25af1d137042a52eda51ac81860b9" class="src_link" title="spec/services/google_calendar_service_spec.rb">spec/services/google_calendar_service_spec.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">78</td>
+            <td class="cell--number">79</td>
             <td class="cell--number">39</td>
             <td class="cell--number">39</td>
             <td class="cell--number">0</td>
@@ -3715,7 +3715,7 @@
 
             
 
-            <code class="ruby">    start_time = event_params[:start_time].to_datetime.rfc3339</code>
+            <code class="ruby">    start_time = event_params[:start_time].to_datetime.utc.iso8601</code>
           </li>
         </div>
       
@@ -3737,7 +3737,7 @@
 
             
 
-            <code class="ruby">    end_time = calculate_end_time(event_params[:start_time].to_datetime, video_duration).rfc3339</code>
+            <code class="ruby">    end_time = calculate_end_time(event_params[:start_time].to_datetime, video_duration).utc.iso8601</code>
           </li>
         </div>
       
@@ -3852,18 +3852,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="81">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  private</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="82">
+          <li class="never" data-hits="" data-linenumber="81">
             
             
 
@@ -3874,13 +3863,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="83">
+          <li class="covered" data-hits="1" data-linenumber="82">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def calculate_end_time(start_time, duration)</code>
+            <code class="ruby">  private</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="83">
+            
+            
+
+            
+
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -3891,7 +3891,7 @@
 
             
 
-            <code class="ruby">    total_seconds = iso8601_duration_to_seconds(duration)</code>
+            <code class="ruby">  def calculate_end_time(start_time, duration)</code>
           </li>
         </div>
       
@@ -3902,12 +3902,23 @@
 
             
 
+            <code class="ruby">    total_seconds = iso8601_duration_to_seconds(duration)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="86">
+            <span class="hits">1</span>
+            
+
+            
+
             <code class="ruby">    start_time + total_seconds.seconds</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="86">
+          <li class="never" data-hits="" data-linenumber="87">
             
             
 
@@ -3918,7 +3929,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="87">
+          <li class="never" data-hits="" data-linenumber="88">
             
             
 
@@ -6772,7 +6783,7 @@
 
             
 
-            <code class="ruby">  let(:start_time) { DateTime.now }</code>
+            <code class="ruby">  let(:start_time) { DateTime.now.utc }</code>
           </li>
         </div>
       
@@ -7399,7 +7410,7 @@
 
             
 
-            <code class="ruby">      start_time_rfc3339 = start_time.rfc3339</code>
+            <code class="ruby">      start_time_iso8601 = start_time.utc.iso8601</code>
           </li>
         </div>
       
@@ -7410,7 +7421,7 @@
 
             
 
-            <code class="ruby">      end_time_rfc3339 = end_time.rfc3339</code>
+            <code class="ruby">      end_time_iso8601 = end_time.utc.iso8601</code>
           </li>
         </div>
       
@@ -7487,7 +7498,7 @@
 
             
 
-            <code class="ruby">      expected_link += &quot;&amp;dates=#{start_time_rfc3339}/#{end_time_rfc3339}&quot;</code>
+            <code class="ruby">      expected_link += &quot;&amp;dates=#{start_time_iso8601}/#{end_time_iso8601}&quot;</code>
           </li>
         </div>
       
@@ -7543,6 +7554,17 @@
             
 
             <code class="ruby">end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="79">
+            
+            
+
+            
+
+            <code class="ruby"></code>
           </li>
         </div>
       

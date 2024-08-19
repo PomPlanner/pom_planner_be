@@ -5,7 +5,7 @@ RSpec.describe GoogleCalendarService do
   let(:user) { double("User", token: "new_access_token", refresh_token: "mock_refresh_token") }
   let(:google_calendar_service) { GoogleCalendarService.new(user) }
   let(:calendar_service) { instance_double(Google::Apis::CalendarV3::CalendarService) }
-  let(:start_time) { DateTime.now }
+  let(:start_time) { DateTime.now.utc }
   let(:video_url) { "https://www.youtube.com/watch?v=u9OQMBPrFgI" }
   let(:video_duration) { "PT5M13S" }
 
@@ -62,17 +62,18 @@ RSpec.describe GoogleCalendarService do
 
     it "generates a correct event link" do
       end_time = start_time + 5.minutes + 13.seconds
-      start_time_rfc3339 = start_time.rfc3339
-      end_time_rfc3339 = end_time.rfc3339
+      start_time_iso8601 = start_time.utc.iso8601
+      end_time_iso8601 = end_time.utc.iso8601
 
       event_link = google_calendar_service.generate_event_link(event_params)
 
       expected_link = "https://www.google.com/calendar/render?action=TEMPLATE"
       expected_link += "&text=Test+Event"
       expected_link += "&details=Watch+this+video%3A+https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Du9OQMBPrFgI"
-      expected_link += "&dates=#{start_time_rfc3339}/#{end_time_rfc3339}"
+      expected_link += "&dates=#{start_time_iso8601}/#{end_time_iso8601}"
 
       expect(event_link).to eq(expected_link)
     end
   end
 end
+

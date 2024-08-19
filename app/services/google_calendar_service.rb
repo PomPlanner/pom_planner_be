@@ -65,9 +65,9 @@ class GoogleCalendarService
 
 
   def generate_event_link(event_params)
-    start_time = event_params[:start_time].to_datetime.rfc3339
+    start_time = event_params[:start_time].to_datetime.utc.iso8601
     video_duration = event_params[:video_duration]
-    end_time = calculate_end_time(event_params[:start_time].to_datetime, video_duration).rfc3339
+    end_time = calculate_end_time(event_params[:start_time].to_datetime, video_duration).utc.iso8601
 
     event_description = "Watch this video: #{event_params[:description]}"
 
@@ -77,6 +77,7 @@ class GoogleCalendarService
     event_link += "&dates=#{start_time}/#{end_time}"
     event_link
   end
+
 
   private
 
