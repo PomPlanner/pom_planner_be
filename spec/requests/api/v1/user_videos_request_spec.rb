@@ -8,6 +8,16 @@ RSpec.describe "API::V1::UserVideos", type: :request do
   end
 
   describe "Happy paths" do
+    it "retrieves a list of favorite videos" do
+      get api_v1_user_videos_path(@user1)
+
+      expect(response).to have_http_status(:ok)
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response["data"].length).to eq(2)
+      expect(parsed_response["data"][0]["attributes"]["title"]).to eq(@video1.title)
+      expect(parsed_response["data"][1]["attributes"]["title"]).to eq(@video2.title)
+    end
+    
     it "saves a new user video favorite" do
       video_params = {
         user_video: {
