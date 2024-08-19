@@ -7,6 +7,7 @@ class Api::V1::VideosController < ApplicationController
   end
   
   def create
+    # require 'pry'; binding.pry
     @user_video = @user.user_videos.create!(video_params)
     render json: { message: 'Video added to favorites' }, status: :created
   rescue ActiveRecord::RecordNotFound => e
@@ -30,6 +31,6 @@ class Api::V1::VideosController < ApplicationController
   end
 
   def video_params
-    params.require(:video).permit(:title, :url, :embed_url, :duration, :duration_category)
+    params.require(:user_video).permit(:title, :url, :embed_url, :duration, :duration_category)
   end
 end

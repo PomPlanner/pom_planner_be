@@ -11,20 +11,14 @@ class YoutubeService
       videoDuration: video_duration
     }
 
-    # parse_response(response)
     response = call_api(url, params)
     items = response[:items] || []
-    # video_ids = items.map { |item| item[:id][:videoId] }
-    # video_details = fetch_video_details(video_ids)
-    
-    # items.map { |item| YoutubeVideo.new(item, video_details[item[:id][:videoId]]) }
-    # Fetch details for each video
+
     items.map do |item|
       video_id = item.dig(:id, :videoId)
       details = fetch_video_details(video_id)
       YoutubeVideo.new(item, details)
     end
-    # require 'pry'; binding.pry
   end
 
   private
@@ -45,21 +39,12 @@ class YoutubeService
   def self.fetch_video_details(video_id)
     url = 'videos'
     params = {
-      # part: 'contentDetails',
-      # id: video_ids.join(','),
-      # key: Rails.application.credentials.google[:api_key]
       part: 'contentDetails',
       id: video_id
     }
 
     response = call_api(url, params)
     response[:items].first[:contentDetails]
-
-    # details.each_with_object({}) do |item, hash|
-    #   video_id = item[:id]
-    #   duration = item[:contentDetails][:duration]
-    #   hash[video_id] = { duration: duration }
-    # end
   end
   
   def self.parse_response(response)
