@@ -28,12 +28,11 @@ RSpec.describe GoogleCalendarService do
         video_url
       )
 
-      expect(event.start.date_time).to eq(start_time)
-      expect(event.end.date_time).to eq(end_time)
+      expect(event.start.date_time).to eq(start_time.utc.iso8601)
+      expect(event.end.date_time).to eq(end_time.utc.iso8601)
       expect(event.description).to include(video_url)
       expect(event.description).to include("Get out of your seat!")
     end
-
 
     it "raises an error if the API call fails" do
       allow(calendar_service).to receive(:insert_event).and_raise(Google::Apis::ServerError.new("Server error"))
