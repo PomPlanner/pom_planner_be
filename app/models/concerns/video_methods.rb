@@ -43,11 +43,20 @@ module VideoMethods
   end
 
   def iso8601_duration_to_seconds(duration)
-    match = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/.match(duration)
+    match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/)
     hours = match[1].to_i
     minutes = match[2].to_i
     seconds = match[3].to_i
     (hours * 3600) + (minutes * 60) + seconds
+  rescue NoMethodError
+    # Fallback for simpler duration formats like "39 seconds"
+    if duration.match(/(\d+)\s*seconds?/i)
+      return $1.to_i
+    elsif duration.match(/(\d+)\s*minutes?/i)
+      return $1.to_i * 60
+    else
+      raise "Unable to parse duration: #{duration}"
+    end
   end
 
   def human_readable_duration_to_seconds(duration)

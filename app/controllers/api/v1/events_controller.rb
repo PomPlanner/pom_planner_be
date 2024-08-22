@@ -18,5 +18,8 @@ class Api::V1::EventsController < ApplicationController
     event_link = google_calendar_service.generate_event_link(event_params)
 
     render json: { event_link: event_link }
+  rescue => e
+    Rails.logger.error("Error generating Google Calendar link: #{e.message}")
+    render json: { error: 'Failed to generate event link' }, status: :internal_server_error
   end
 end
