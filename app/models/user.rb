@@ -7,10 +7,18 @@ class User < ApplicationRecord
       user.name = response[:info][:name]
       user.image = response[:info][:image]
       user.email = response[:info][:email]
-      user.token = response[:credentials][:token] # Store access token
-      user.refresh_token = response[:credentials][:refresh_token] # Store refresh token
-      user.password = SecureRandom.hex(15)
-      # require 'pry'; binding.pry
+      user.token = response[:credentials][:token]
+      user.refresh_token = response[:credentials][:refresh_token]
+      user.password = generate_secure_password
     end
+  rescue => e
+    Rails.logger.error("Error during OAuth user creation: #{e.message}")
+    nil
+  end
+
+  private
+
+  def self.generate_secure_password
+    SecureRandom.hex(15)
   end
 end

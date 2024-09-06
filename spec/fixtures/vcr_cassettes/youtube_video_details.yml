@@ -1,0 +1,71 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.googleapis.com/youtube/v3/videos?id=D0izNXUxKwM&key=<API_KEY>&part=contentDetails
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.10.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Fri, 06 Sep 2024 17:40:49 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      Cache-Control:
+      - private
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "kind": "youtube#videoListResponse",
+          "etag": "sSQnvDqZqiebIjmiTAF6CWSu-qo",
+          "items": [
+            {
+              "kind": "youtube#video",
+              "etag": "VhjCOwB_GB-hnpFolLybtX4IgEM",
+              "id": "D0izNXUxKwM",
+              "contentDetails": {
+                "duration": "PT25S",
+                "dimension": "2d",
+                "definition": "hd",
+                "caption": "false",
+                "licensedContent": true,
+                "contentRating": {},
+                "projection": "rectangular"
+              }
+            }
+          ],
+          "pageInfo": {
+            "totalResults": 1,
+            "resultsPerPage": 1
+          }
+        }
+  recorded_at: Fri, 06 Sep 2024 17:40:49 GMT
+recorded_with: VCR 6.2.0
