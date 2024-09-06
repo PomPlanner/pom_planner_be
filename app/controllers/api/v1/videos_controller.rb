@@ -11,7 +11,6 @@ class Api::V1::VideosController < ApplicationController
   end
   
   def create
-    # require 'pry'; binding.pry
     @user_video = @user.user_videos.create!(video_params)
     render json: { message: 'Video added to favorites' }, status: :created
   rescue ActiveRecord::RecordNotFound => e

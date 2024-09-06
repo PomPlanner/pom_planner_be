@@ -25,4 +25,29 @@ RSpec.describe 'YoutubeService', type: :service do
       end
     end
   end
+
+  describe '.fetch_video_details' do
+    let(:video_id) { 'D0izNXUxKwM' }
+
+    it 'fetches video details for a specific video' do
+      VCR.use_cassette('youtube_video_details') do
+        details = YoutubeService.fetch_video_details(video_id)
+        expect(details).not_to be_nil
+        expect(details[:duration]).to eq('PT25S')
+      end
+    end
+  end
+
+  describe 'when there is an API failure' do
+    let(:query_keywords) { 'posture exercises' }
+    let(:video_duration) { 'short' }
+    
+    it 'raises an error if the YouTube API fails' do
+      allow(YoutubeService).to receive(:call_api).and_raise(StandardError.new('YouTube API error: Service Unavailable'))
+      
+      expect {
+        YoutubeService.search(query_keywords, video_duration)
+      }.to raise_error(StandardError, /YouTube API error: Service Unavailable/)
+    end
+  end
 end

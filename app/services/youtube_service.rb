@@ -16,12 +16,12 @@ class YoutubeService
 
     items.map do |item|
       video_id = item.dig(:id, :videoId)
-      details = fetch_video_details(video_id)  # Now calling this method
+      details = fetch_video_details(video_id)
       YoutubeVideo.new(item, details)
     end
   end
 
-  def self.fetch_video_details(video_id)  # This method should exist
+  def self.fetch_video_details(video_id)
     url = 'videos'
     params = {
       part: 'contentDetails',
