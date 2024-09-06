@@ -31,7 +31,7 @@ class GoogleCalendarService
   def generate_event_link(video_url)
     event_link = "https://www.google.com/calendar/render?action=TEMPLATE"
     event_link += "&text=PomPlaner+Event"
-    event_link += "&details=Watch+this+video%3A+#{video_url}"
+    event_link += "&details=Watch+this+video%3A+#{CGI.escape(video_url)}"
     event_link
   end
 end
