@@ -16,9 +16,20 @@ class YoutubeService
 
     items.map do |item|
       video_id = item.dig(:id, :videoId)
-      details = fetch_video_details(video_id)
+      details = fetch_video_details(video_id)  # Now calling this method
       YoutubeVideo.new(item, details)
     end
+  end
+
+  def self.fetch_video_details(video_id)  # This method should exist
+    url = 'videos'
+    params = {
+      part: 'contentDetails',
+      id: video_id
+    }
+
+    response = call_api(url, params)
+    response[:items].first[:contentDetails]
   end
 
   private
@@ -39,26 +50,5 @@ class YoutubeService
 
   def self.connection
     Faraday.new('https://www.googleapis.com/youtube/v3')
-  end
-
-  def self.fetch_video_details(video_id)
-    url = 'videos'
-    params = {
-      part: 'contentDetails',
-      id: video_id
-    }
-
-    response = call_api(url, params)
-    response[:items].first[:contentDetails]
-  end
-  
-  def self.parse_response(response)
-    if response.key?(:error)
-      error_message = response[:error][:message]
-      raise StandardError, "YouTube API error: #{error_message}"
-    else
-      items = response[:items] || []
-      items.map { |item| YoutubeVideo.new(item) }
-    end
   end
 end
