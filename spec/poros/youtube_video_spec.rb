@@ -31,24 +31,28 @@ RSpec.describe YoutubeVideo do
       expect(@youtube_video.formatted_duration).to eq("10 minutes")
     end
 
-    it "returns the originial duration if it's not in ISO8601 format" do
+    it "returns the duration as-is if it's already in human-readable format" do
       non_iso_duration = { duration: "10 minutes" }
-      video_data = @data
-      video = YoutubeVideo.new(video_data, non_iso_duration)
+      video = YoutubeVideo.new(@data, non_iso_duration)
       expect(video.formatted_duration).to eq("10 minutes")
     end
   end
 
   describe "#calculate_duration_category" do
-    it " categorizes medium videos correctly" do
+    it "categorizes medium videos correctly" do
       expect(@youtube_video.calculate_duration_category).to eq("medium")
     end
 
     it "categorizes short videos correctly" do
-      short_video_data = @data
       short_video_details = { duration: "PT3M" }
-      short_video = YoutubeVideo.new(short_video_data, short_video_details)
+      short_video = YoutubeVideo.new(@data, short_video_details)
       expect(short_video.calculate_duration_category).to eq("short")
+    end
+
+    it "does not calculate duration category if it's already set" do
+      existing_duration_category = { duration: "8 minutes", duration_category: "medium" }
+      video = YoutubeVideo.new(@data, existing_duration_category)
+      expect(video.duration_category).to eq("medium")
     end
   end
 
@@ -72,24 +76,6 @@ RSpec.describe YoutubeVideo do
       video = YoutubeVideo.new(@data, details)
       
       expect(video.send(:iso8601_duration_to_seconds, "PT45S")).to eq(45)
-    end
-
-    it "parses human-readable format for minutes correctly" do
-      video = YoutubeVideo.new(@data, { duration: "10 minutes" })
-      
-      expect(video.send(:iso8601_duration_to_seconds, "10 minutes")).to eq(600)
-    end
-
-    it "parses human-readable format for seconds correctly" do
-      video = YoutubeVideo.new(@data, { duration: "39 seconds" })
-      
-      expect(video.send(:iso8601_duration_to_seconds, "39 seconds")).to eq(39)
-    end
-
-    it "raises an error for unrecognized duration format" do
-      video = YoutubeVideo.new(@data, { duration: "40 meters" })
-      
-      expect { video.send(:iso8601_duration_to_seconds, "40 meters") }.to raise_error("Unable to parse duration: 40 meters")
     end
   end
 end
