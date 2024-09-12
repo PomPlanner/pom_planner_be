@@ -11,9 +11,6 @@ class User < ApplicationRecord
       user.refresh_token = response[:credentials][:refresh_token]
       user.password = generate_secure_password
     end
-  rescue => e
-    Rails.logger.error("Error during OAuth user creation: #{e.message}")
-    nil
   end
 
   private
