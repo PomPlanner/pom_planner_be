@@ -13,8 +13,8 @@ class Api::V1::VideosController < ApplicationController
   def create
     @user_video = @user.user_videos.create!(video_params)
     render json: { message: 'Video added to favorites' }, status: :created
-  rescue ActiveRecord::RecordNotFound => e
-    render json: ErrorSerializer.new(ErrorMessage.new(e.message)).serialize_json, status: :not_found
+  rescue ActiveRecord::RecordInvalid => e
+    render json: ErrorSerializer.new(ErrorMessage.new(e.message)).serialize_json, status: :unprocessable_entity
   end
 
   def destroy

@@ -48,7 +48,6 @@ RSpec.describe "API::V1::UserVideos", type: :request do
   
       expect(response).to have_http_status(:created)
       parsed_response = JSON.parse(response.body)
-      # require 'pry'; binding.pry
       expect(parsed_response['message']).to eq('Video added to favorites')
       expect(@user1.user_videos.count).to eq(3)
     end
@@ -64,6 +63,24 @@ RSpec.describe "API::V1::UserVideos", type: :request do
   end
 
   describe "Sad paths" do
+    it "returns an error when trying to create a video with invalid data" do
+      invalid_video_params = {
+        user_video: {
+          title: "", # Invalid title, assuming there's a presence validation
+          url: "http://www.youtube.com",
+          embed_url: "http://www.youtube.com/embed/test",
+          duration: "PT4M13S",
+          duration_category: "short"
+        }
+      }
+      
+      post api_v1_user_videos_path(@user1), params: invalid_video_params
+      
+      expect(response).to have_http_status(:unprocessable_entity)
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response['errors'].first['detail']).to match(/Validation failed/)
+    end
+
     it "returns an error when trying to create a video for a non-existent user" do
       video_params = {
         user_video: {
