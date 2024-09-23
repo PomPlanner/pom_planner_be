@@ -9,9 +9,9 @@ class Api::V1::SessionsController < ApplicationController
 
     if user.persisted?
       session[:user_id] = user.id 
-      redirect_to "http://localhost:3000/auth/google_oauth2/callback?user_id=#{user.id}"
+      redirect_to "https://pom-planner.herokuapp.com/auth/google_oauth2/callback?user_id=#{user.id}"
     else
-      redirect_to "http://localhost:3000/", alert: "Authentication failed. Please try again."
+      redirect_to "https://pom-planner.herokuapp.com/", alert: "Authentication failed. Please try again."
     end
   rescue => e
     render json: { error: "Authentication error: #{e.message}" }, status: :internal_server_error
