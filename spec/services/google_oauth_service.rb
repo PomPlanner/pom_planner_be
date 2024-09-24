@@ -11,7 +11,7 @@ RSpec.describe GoogleOauthService do
 
     it 'generates the correct OAuth2 URL' do
       expected_client_id = 'test-client-id'
-      expected_redirect_uri = CGI.escape('https://pom-planner-be.herokuapp.com/api/v1/auth/google_oauth2/callback')
+      expected_redirect_uri = CGI.escape('https://pom-planner-be-31825074f3c8.herokuapp.com/api/v1/auth/google_oauth2/callback')
       expected_scope = CGI.escape('email profile https://www.googleapis.com/auth/calendar.events')
 
       expected_url = "https://accounts.google.com/o/oauth2/v2/auth?client_id=#{expected_client_id}&redirect_uri=#{expected_redirect_uri}&response_type=code&scope=#{expected_scope}&prompt=select_account"
