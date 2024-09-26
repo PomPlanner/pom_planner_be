@@ -6,11 +6,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      post '/auth/google_oauth2', to: 'sessions#google_oauth2'
-      get '/auth/google_oauth2', to: 'sessions#google_oauth2'
-      get '/auth/google_oauth2/callback', to: 'sessions#omniauth'
-      delete '/logout', to: 'sessions#destroy'
-      get '/auth/failure', to: redirect('/')
+      # post 'auth/google_oauth2', to: 'sessions#google_oauth2'
+      get 'auth/google_oauth2', to: 'sessions#google_oauth2'
+      get 'auth/google_oauth2/callback', to: 'sessions#omniauth'
+      delete 'logout', to: 'sessions#destroy'
+      get 'auth/failure', to: redirect('/')
 
       resources :users, only: [:show] do
         resources :videos, only: [:index, :create, :destroy]
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
         end
       end
 
-      get '/search', to: 'searches#index'
+      get 'search', to: 'searches#index'
     end
   end
 end
