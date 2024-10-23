@@ -82,4 +82,4 @@ production:
   database: pom_planner_be_production
   username: pom_planner_be
   password: <%= ENV["POM_PLANNER_BE_DATABASE_PASSWORD"] %>
-  url: <%= ENV['DATABASE_URL'] 
+  url: <%= ENV['DATABASE_URL'] %>
