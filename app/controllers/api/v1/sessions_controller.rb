@@ -9,7 +9,7 @@ class Api::V1::SessionsController < ApplicationController
 
     if user.persisted?
       session[:user_id] = user.id 
-      redirect_to "https://pom-planner-6a8ebbf9e5c1.herokuapp.com/users/#{user.id}"
+      redirect_to "https://pom-planner-6a8ebbf9e5c1.herokuapp.com/users/#{user.id}", allow_other_host: true
     else
       redirect_to "https://pom-planner-6a8ebbf9e5c1.herokuapp.com/", alert: "Authentication failed. Please try again."
     end
