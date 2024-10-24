@@ -37,7 +37,7 @@ class YoutubeService
   def self.call_api(url, params = {})
     response = connection.get(url) do |request|
       request.params = params
-      request.params[:key] = Rails.application.credentials.google[:api_key]
+      request.params[:key] = ENV['GOOGLE_API_KEY']
     end
 
     if response.status != 200
