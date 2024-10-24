@@ -11,7 +11,7 @@ class Api::V1::SessionsController < ApplicationController
       session[:user_id] = user.id
       Rails.logger.info "Session set: #{session[:user_id]}"
       Rails.logger.info("Session data: #{session.inspect}")
-      redirect_to "https://pom-planner-6a8ebbf9e5c1.herokuapp.com/users/#{user.id}", allow_other_host: true
+      redirect_to "https://pom-planner-6a8ebbf9e5c1.herokuapp.com/users/#{user.id}?user_id=#{user.id}", allow_other_host: true
     else
       redirect_to "https://pom-planner-6a8ebbf9e5c1.herokuapp.com/", alert: "Authentication failed. Please try again."
     end
