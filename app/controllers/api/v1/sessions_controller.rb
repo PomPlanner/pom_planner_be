@@ -12,9 +12,10 @@ class Api::V1::SessionsController < ApplicationController
       Rails.logger.info "Session set: #{session[:user_id]}"
       Rails.logger.info("Session data: #{session.inspect}")
       Rails.logger.info("User object: #{user.inspect}")
-      redirect_to "https://pom-planner-6a8ebbf9e5c1.herokuapp.com/users/#{user.id}", allow_other_host: true
+      Rails.logger.info("Cookies data: #{cookies.inspect}")
+      redirect_to "http://localhost:3000/users/#{user.id}", allow_other_host: true
     else
-      redirect_to "https://pom-planner-6a8ebbf9e5c1.herokuapp.com", alert: "Authentication failed. Please try again."
+      redirect_to "http://localhost:3000/auth/google_oauth2/callback", alert: "Authentication failed. Please try again."
     end
   rescue => e
     render json: { error: "Authentication error: #{e.message}" }, status: :internal_server_error
